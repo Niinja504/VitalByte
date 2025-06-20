@@ -1,20 +1,20 @@
 .sidebar {
-  width: 250px; /* Ancho del cuadro del sidebar */
-  background-color: #f5f5f5; /* Fondo claro */
+  width: 250px;
+  background-color: #f5f5f5;
   padding: 20px;
-  border-radius: 10px 0 0 10px; /* Bordes redondeados solo en la esquina izquierda */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el efecto de cuadro */
-  border: 1px solid #914F1E; /* Borde café */
-  border-right: none; /* Elimina el borde derecho para conectar con el contenido */
-  min-height: 620px; /* Altura mínima de 620px */
-  display: flex; /* Asegura que el contenido interno se ajuste */
-  flex-direction: column; /* Alinea los botones en columna */
+  border-radius: 10px 0 0 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #914F1E;
+  border-right: none;
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar h2 {
   font-size: 18px;
   margin-bottom: 15px;
-  color:#732F0F
+  color: #732F0F;
 }
 
 .category-list {
@@ -26,81 +26,81 @@
 .category-item {
   background-color: transparent;
   border: none;
-  color: #914F1E; /* Texto en color café cuando está inactivo */
+  color: #914F1E;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
   padding: 10px 20px;
-  border-radius: 5px; /* Bordes redondeados */
+  border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
-  max-width: 260px; /* Ancho máximo de 260px */
-  text-align: left; /* Alinea el texto a la izquierda */
-  margin-bottom: 10px; /* Espaciado entre botones */
-  overflow: hidden; /* Oculta el contenido que exceda el ancho */
-  text-overflow: ellipsis; /* Agrega puntos suspensivos si el texto es demasiado largo */
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  max-width: 260px;
+  text-align: left;
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .category-item span {
   font-size: 16px;
-  color: #914F1E; /* Texto en color café por defecto */
-  transition: color 0.3s ease; /* Transición suave para el color */
+  color: #914F1E;
+  transition: color 0.3s ease;
 }
 
 .category-item:hover {
-  background-color: #732F0F; /* Fondo más oscuro al pasar el mouse */
+  background-color: #732F0F;
 }
 
 .category-item:hover span {
-  color: white; /* Texto blanco al pasar el mouse */
+  color: white;
 }
 
 .category-item.active {
-  background-color: #914F1E; /* Fondo para el estado activo */
+  background-color: #914F1E;
 }
 
 .category-item.active span {
-  color: white; /* Texto blanco cuando está activo */
+  color: white;
 }
 
 .category-icon {
   margin-right: 10px;
-  fill: currentColor; /* Asegura que el ícono herede el color del texto */
+  fill: currentColor;
 }
 
 .category-item.active .category-icon {
-  fill: white; /* Ícono blanco en el estado activo */
+  fill: white;
 }
 
 .search-bar {
-  margin-bottom: 20px; /* Espaciado entre la barra de búsqueda y la lista de productos */
+  margin-bottom: 20px;
 }
 
 .search-bar input {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  border: 2px solid #914F1E; /* Borde café */
-  border-radius: 5px; /* Bordes redondeados */
-  background-color: #ffffff; /* Fondo claro */
-  color: #732F0F; /* Texto café oscuro */
+  border: 2px solid #914F1E;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #732F0F;
   transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .search-bar input::placeholder {
-  color: #914F1E; /* Color café para el texto del placeholder */
+  color: #914F1E;
 }
 
 .search-bar input:focus {
-  border-color: #732F0F; /* Borde más oscuro al enfocar */
-  background-color: #ffffff; /* Fondo blanco al enfocar */
-  color: #732F0F; /* Texto café oscuro */
-  outline: none; /* Elimina el contorno azul predeterminado */
+  border-color: #732F0F;
+  background-color: #ffffff;
+  color: #732F0F;
+  outline: none;
 }
 
 .product-list {
   display: flex;
-  flex-wrap: wrap; /* Permite que los productos se ajusten en varias filas */
-  gap: 20px; /* Espaciado entre los productos */
-  justify-content: flex-start; /* Alinea los productos al inicio */
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
 }
