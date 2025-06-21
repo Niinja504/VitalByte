@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
       });
       const data = await res.json();
       if (res.ok && data.userType) {
+        // Normalize admin userType to lowercase for consistency
         const normalizedType = data.userType.toLowerCase();
         setUserType(normalizedType);
         setIsAuthenticated(true);
@@ -77,3 +78,22 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => useContext(AuthContext);
 
+// En el componente de login (donde está el input de password):
+// Reemplaza el input de password por esto:
+// <div className="input-group">
+//   <input
+//     type={showPassword ? "text" : "password"}
+//     name="password"
+//     placeholder="Contraseña"
+//     value={password}
+//     onChange={handleChange}
+//     required
+//   />
+//   <span
+//     className="eye-icon"
+//     onClick={() => setShowPassword((v) => !v)}
+//     style={{ cursor: 'pointer', marginLeft: 8 }}
+//   >
+//     {showPassword ? <FaEyeSlash /> : <FaEye />}
+//   </span>
+// </div>

@@ -1,39 +1,25 @@
 import Baner from '../../assets/Banner.png';
-import React, { useState } from 'react';
-
+import React from 'react';
 import './../style/Client/Home.css';
-
+import { useHome } from '../../hooks/pages/useHome';
 
 function Home() {
-  const [mostrarModal, setMostrarModal] = useState(false);
-
-  const abrirModal = () => {
-    setMostrarModal(true);
-  };
-
-  const cerrarModal = () => {
-    setMostrarModal(false);
-  };
+  const { mostrarModal, abrirModal, cerrarModal } = useHome();
 
   return (
     <div className="home">
       <img src={Baner} alt="Banner" className="home-banner" />
-
-      {/* Botón para abrir el modal */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+      <div className="home-btn-container">
         <button onClick={abrirModal}>Iniciar Sesión</button>
       </div>
-
-      {/* Modal */}
       {mostrarModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <button className="modal-close" onClick={cerrarModal}>X</button>
-            <img src={Logo} alt="Logo" className="modal-logo" />
+            {/* Aquí puedes agregar el contenido del modal de login si lo deseas */}
             <h2>Vital Bytes</h2>
             <div className="modal-tabs">
               <span className="active-tab">Iniciar sesión</span>
-              
             </div>
             <div className="modal-inputs">
               <input type="text" placeholder="Usuario" />
@@ -43,8 +29,6 @@ function Home() {
           </div>
         </div>
       )}
-
-      {/* Contenido normal de tu Home */}
       <section className="about-section">
         <h2>Acerca de Nosotros</h2>
         <p>
@@ -61,17 +45,18 @@ function Home() {
           ¡Bienvenido a Vital Byte y nutre tu cuerpo con lo mejor de la naturaleza! 🌿✨
         </p>
       </section>
-
       <section className="cards-container">
         <div className="card">
           <h3>Términos y Condiciones</h3>
           <p>
-           Al acceder y utilizar esta tienda en línea, aceptas que los productos ofrecidos son alimentos saludables sujetos a disponibilidad, y que toda la información brindada es veraz y actualizada. Nos reservamos el derecho de modificar precios, descripciones, y políticas sin previo aviso, así como de rechazar pedidos por razones justificadas como sospecha de fraude o falta de inventario.          </p>
+           Al acceder y utilizar esta tienda en línea, aceptas que los productos ofrecidos son alimentos saludables sujetos a disponibilidad, y que toda la información brindada es veraz y actualizada. Nos reservamos el derecho de modificar precios, descripciones, y políticas sin previo aviso, así como de rechazar pedidos por razones justificadas como sospecha de fraude o falta de inventario.
+          </p>
         </div>
         <div className="card">
           <h3>Política de Privacidad</h3>
           <p>
-            Los pedidos realizados están sujetos a confirmación y se procesan con base en disponibilidad y tiempo estimado de entrega. No aceptamos devoluciones de productos alimenticios salvo en caso de daño comprobable. El uso del sitio implica la aceptación de nuestras políticas de privacidad, propiedad intelectual y responsabilidad por el consumo adecuado de nuestros productos, incluyendo alergias o restricciones personales.          </p>
+            Los pedidos realizados están sujetos a confirmación y se procesan con base en disponibilidad y tiempo estimado de entrega. No aceptamos devoluciones de productos alimenticios salvo en caso de daño comprobable. El uso del sitio implica la aceptación de nuestras políticas de privacidad, propiedad intelectual y responsabilidad por el consumo adecuado de nuestros productos, incluyendo alergias o restricciones personales.
+          </p>
         </div>
       </section>
     </div>

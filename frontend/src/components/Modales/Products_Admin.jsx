@@ -1,17 +1,27 @@
 import React from "react";
 import "../Modales/Styles/Products_Admin.css";
+import { useProductsAdmin } from '../../hooks/components/useProductsAdmin';
 
 const ModalEditarProducto = ({
   isVisible,
   onClose,
-  formData,
-  handleChange,
-  handleImageUpload,
-  previewImage,
-  guardarProducto,
+  formData: initialFormData,
+  handleChange: parentHandleChange,
+  handleImageUpload: parentHandleImageUpload,
+  previewImage: parentPreviewImage,
+  guardarProducto: parentGuardarProducto,
   categories,
   isEditMode,
+  onSave
 }) => {
+  const {
+    formData,
+    previewImage,
+    handleChange,
+    handleImageUpload,
+    guardarProducto
+  } = useProductsAdmin(initialFormData, onSave, onClose);
+
   if (!isVisible) return null;
 
   return (

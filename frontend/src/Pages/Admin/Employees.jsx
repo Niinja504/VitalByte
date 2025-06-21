@@ -1,32 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import React from 'react';
 import RegisterEmployeeModal from '../../components/Modales/RegisterEmployeeModal.jsx';
-import '../style/Admin/employees.css';
+import '../style/Admin/Employees.css';
 import Title from '../../components/Title.jsx';
-import useDataEmployee from '../../hooks/useDataEmployee.jsx';
+import { useEmployees } from '../../hooks/pages/useEmployees';
 
 const Employees = () => {
-
-  const {    showRegister,
+  const {
+    showRegister,
     setShowRegister,
     empleados,
-
     empleadoEdit,
     setEmpleadoEdit,
-
     eliminarEmpleado,
     handleCloseModal,
-    handleSuccess } = useDataEmployee();
- 
+    handleSuccess
+  } = useEmployees();
 
   return (
     <div className="employees-container">
       <div className="header-container">
         <div className="header-info">
-             <Title
-          texto="Empleados"
-          />
+          <Title texto="Empleados" />
           <p className="txt">Administra aquí los empleados de la empresa.</p>
         </div>
         <button
@@ -39,14 +33,12 @@ const Employees = () => {
           Registrar nuevo empleado
         </button>
       </div>
-
       <RegisterEmployeeModal
         isVisible={showRegister}
         onClose={handleCloseModal}
         onSuccess={handleSuccess}
         employeeToEdit={empleadoEdit}
       />
-
       <div className="tabla-contenedor">
         <table className="tabla">
           <thead>
@@ -80,10 +72,11 @@ const Employees = () => {
                       setEmpleadoEdit(emp);
                       setShowRegister(true);
                     }}
-                  >
-                    Editar
-                  </button>
-                  <button className="btn-eliminar" onClick={() => eliminarEmpleado(emp._id)}>Eliminar</button>
+                  >Editar</button>
+                  <button
+                    className="btn-eliminar"
+                    onClick={() => eliminarEmpleado(emp._id)}
+                  >Eliminar</button>
                 </td>
               </tr>
             ))}

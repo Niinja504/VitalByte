@@ -1,7 +1,9 @@
 import React from 'react';
-import './style/Pedido.css'; // Asegúrate de crear este archivo para los estilos
+import './style/Pedido.css';
+import { usePedido } from '../hooks/components/usePedido';
 
 const Pedido = ({ fecha, total, cantidad }) => {
+  usePedido(fecha, total, cantidad);
   return (
     <div className="pedido">
       <p><strong>Fecha:</strong> {fecha}</p>

@@ -1,26 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style/Nav.css';
 import logo from '../assets/logovitalBytes.webp';
 import Submenu1 from './submenu1.jsx';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useNav } from '../hooks/components/useNav';
 import SubmenuLog from './submenulog.jsx';
+import { Link } from 'react-router-dom';
 
 const Nav = () => {
-    const [isSubmenuVisible, setIsSubmenuVisible] = useState(false);
-    const { isAuthenticated } = useAuth();
-
-    const ToggleSubmenu = () => {
-        setIsSubmenuVisible(!isSubmenuVisible);
-    };
-
-    //constante para nav
-    const getActiveClass = (path) => {
-        // Para la ruta inicial, '/' y '/Home' deben ser activos
-        if ((window.location.pathname === '/' && path === '/Home') || window.location.pathname === path) {
-            return 'active';
-        }
-        return '';
-    };
+    const {
+        isSubmenuVisible,
+        ToggleSubmenu,
+        getActiveClass,
+        isAuthenticated
+    } = useNav();
 
     return (
         <div className="div">
@@ -40,31 +32,19 @@ const Nav = () => {
                         <a href="/Contacto" className={getActiveClass('/Contacto')}>Contacto</a>
                     </li>
                 </ul>
-                <div className="perfil-cart-row">
-                    <div className="MiPerfil" onClick={ToggleSubmenu}>
+                <div className="MiPerfil" onClick={ToggleSubmenu}>
+                    <div className="perfil-content">
                         <i className="fa-solid fa-circle-user user-pic"></i>
-                        <a href="#">Mi perfil</a>
-                        <i
-                            className={`fa-solid fa-chevron-right arrow-right ${
-                                isSubmenuVisible ? 'active' : ''
-                            }`}
-                            id="arrow-right"
-                        ></i>
+                        <span className="perfil-span">Mi perfil</span>
+                        <i className={`fa-solid fa-chevron-right arrow-right${isSubmenuVisible ? ' active' : ''} perfil-arrow`} id="arrow-right"></i>
                     </div>
-                    <div className="linea-vertical"></div>
-                    <a href="/Cart" className={getActiveClass('/Cart') + ' cart-link'}>
-                        <i className={
-                            'fa-solid fa-cart-shopping cart-icon' +
-                            (getActiveClass('/Cart') === 'active' ? ' active' : '')
-                        }></i>
-                    </a>
+                    <div className={`submenu${isSubmenuVisible ? ' active' : ''}`} id="submenu">
+                        {isAuthenticated ? <SubmenuLog /> : <Submenu1 />}
+                    </div>
                 </div>
-                <div
-                    className={`submenu ${isSubmenuVisible ? 'active' : ''}`}
-                    id="submenu"
-                >
-                    {isAuthenticated ? <SubmenuLog /> : <Submenu1 />}
-                </div>
+                <Link to="/Cart" className="cart-btn" aria-label="Carrito de compras">
+                    <i className="fa-solid fa-cart-shopping cart-icon"></i>
+                </Link>
             </nav>
         </div>
     );

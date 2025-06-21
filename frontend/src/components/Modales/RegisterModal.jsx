@@ -1,92 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from './Modal.jsx';
 import { FaUser, FaUserCircle, FaEnvelope, FaLock, FaBirthdayCake, FaPhone, FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useRegisterModal } from '../../hooks/components/useRegisterModal';
 import VerifyEmailModal from './VerifyEmailModal.jsx';
+import './Styles/Modal.css';
+import '../style/RegisterModalCustom.css';
 
 const RegisterModal = ({ isVisible, onClose, onSwitchToLogin }) => {
-    const [form, setForm] = useState({
-        nombre: '',
-        usuario: '',
-        correo: '',
-        password: '',
-        confirmPassword: '', // Nuevo campo
-        nacimiento: '',
-        telefono: ''
-    });
-    const { register } = useAuth();
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState(false);
-    const [showVerifyModal, setShowVerifyModal] = useState(false);
-    const [pendingRegister, setPendingRegister] = useState(null);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'telefono') {
-            // Solo permitir números y máximo 8 dígitos (sin contar el guion)
-            let raw = value.replace(/[^0-9]/g, '');
-            if (raw.length > 8) raw = raw.slice(0, 8);
-            // Insertar guion después del cuarto número si hay más de 4
-            if (raw.length > 4) {
-                raw = raw.slice(0, 4) + '-' + raw.slice(4);
-            }
-            setForm({ ...form, [name]: raw });
-        } else {
-            setForm({ ...form, [name]: value });
-        }
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // Validación de campos
-        if (!form.nombre || !form.usuario || !form.correo || !form.password || !form.confirmPassword || !form.nacimiento || !form.telefono) {
-            setError('Todos los campos son obligatorios.');
-            return;
-        }
-        // Validar que las contraseñas coincidan
-        if (form.password !== form.confirmPassword) {
-            setError('Las contraseñas no coinciden.');
-            return;
-        }
-        // Validar formato de correo
-        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.correo)) {
-            setError('Correo electrónico inválido.');
-            return;
-        }
-        // Validar formato de fecha
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(form.nacimiento)) {
-            setError('Fecha de nacimiento inválida.');
-            return;
-        }
-        // Validar teléfono (8 dígitos)
-        if (!/^\d{8}$/.test(form.telefono.replace(/-/g, ''))) {
-            setError('El teléfono debe tener 8 dígitos.');
-            return;
-        }
-        setError('');
-        const userData = {
-            fullname: form.nombre,
-            username: form.usuario,
-            email: form.correo,
-            password: form.password,
-            birth: form.nacimiento,
-            phone: form.telefono.replace(/-/g, ''),
-        };
-        const ok = await register(userData);
-        if (ok) {
-            setSuccess(true);
-            setError('');
-            setPendingRegister(userData.email);
-            // Espera un momento para mostrar el mensaje de éxito antes de mostrar el modal de verificación
-            setTimeout(() => {
-                setShowVerifyModal(true);
-            }, 1200); // 1.2 segundos
-        } else {
-            setError('Error al registrar. Intenta con otro correo.');
-        }
-    };
+    const {
+        form,
+        error,
+        success,
+        showVerifyModal,
+        setShowVerifyModal,
+        pendingRegister,
+        setPendingRegister,
+        showPassword,
+        setShowPassword,
+        showConfirmPassword,
+        setShowConfirmPassword,
+        handleChange,
+        handleSubmit
+    } = useRegisterModal();
 
     return (
         <>
@@ -138,9 +73,8 @@ const RegisterModal = ({ isVisible, onClose, onSwitchToLogin }) => {
                         required
                     />
                     <span
-                        className="eye-icon"
+                        className="register-modal-eye-icon"
                         onClick={() => setShowPassword((v) => !v)}
-                        style={{ cursor: 'pointer', marginLeft: 8 }}
                         tabIndex={-1}
                     >
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -151,15 +85,14 @@ const RegisterModal = ({ isVisible, onClose, onSwitchToLogin }) => {
                     <input
                         type={showConfirmPassword ? "text" : "password"}
                         name="confirmPassword"
-                        placeholder="Confirmar Contraseña"
+                        placeholder="Confirmar contraseña"
                         value={form.confirmPassword}
                         onChange={handleChange}
                         required
                     />
                     <span
-                        className="eye-icon"
+                        className="register-modal-eye-icon"
                         onClick={() => setShowConfirmPassword((v) => !v)}
-                        style={{ cursor: 'pointer', marginLeft: 8 }}
                         tabIndex={-1}
                     >
                         {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}

@@ -1,0 +1,20 @@
+/* NavAdmin custom styles extracted from inline JSX */
+.mi-perfil {
+  position: relative;
+  display: inline-block;
+  margin-left: 20px;
+}
+.mi-perfil-content {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.mi-perfil-span {
+  margin-left: 8px;
+  color: #914F1E;
+  white-space: nowrap;
+}
+.mi-perfil-arrow {
+  margin-left: 8px;
+}

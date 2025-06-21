@@ -15,7 +15,6 @@ import Orders from './Pages/Admin/Orders.jsx';
 import Sales from './Pages/Admin/Sales.jsx';
 import Products from './Pages/Admin/Products.jsx';
 import Footer from './components/Footer';
-import Category from './Pages/Admin/Category.jsx';
 import './App.css';
 
 function App() {
@@ -50,7 +49,6 @@ function App() {
         <Routes>
           {isAdminView ? (
             <>
-              <Route path="/Admin/Categorias" element={<Category />} />
               <Route path="/Admin/Pedidos" element={<Orders />} />
               <Route path="/Admin/Ventas" element={<Sales />} />
               <Route path="/Admin/Productos" element={<Products />} />
@@ -61,7 +59,6 @@ function App() {
           ) : (
             <>
               <Route path="/" element={<Navigate to="/Home" />} />
-
               <Route path="/Home" element={<Home />} />
               <Route path="/Catalogo" element={<Catalogo />} />
               <Route path="/Contacto" element={<Contacto />} />

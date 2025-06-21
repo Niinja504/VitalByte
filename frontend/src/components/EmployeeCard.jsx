@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../components/style/EmployeeCard.css'; 
+import { useEmployeeCard } from '../hooks/components/useEmployeeCard';
 
 const EmployeeCard = ({ employee, onUpdate }) => {
-  const [alertVisible, setAlertVisible] = useState(false);
-
-  const handleUpdate = () => {
-    onUpdate(employee); 
-    setAlertVisible(true);
-    setTimeout(() => setAlertVisible(false), 3000); 
-  };
+  const { alertVisible, handleUpdate } = useEmployeeCard(onUpdate, employee);
 
   return (
     <div className="employee-card">
@@ -19,9 +14,7 @@ const EmployeeCard = ({ employee, onUpdate }) => {
       <p><strong>Fecha de nacimiento:</strong> {employee.birth}</p>
       <p><strong>Teléfono:</strong> {employee.phone}</p>
       <p><strong>Rol:</strong> {employee.role}</p>
-
       <button className="btn-actualizar" onClick={handleUpdate}>Actualizar</button>
-
       {alertVisible && <div className="alerta-exito">¡Empleado actualizado correctamente!</div>}
     </div>
   );

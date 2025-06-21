@@ -1,22 +1,15 @@
 import React from 'react';
-import './style/Submenu.css';
-import { useAuth } from '../context/AuthContext.jsx';
-import { useNavigate } from 'react-router-dom';
+import './style/submenu.css';
 import LogoutConfirmModal from './LogoutConfirmModal.jsx';
+import { useSubmenuLog } from '../hooks/components/useSubmenuLog';
 
 const SubmenuLog = () => {
-    const { logout } = useAuth();
-    const navigate = useNavigate();
-    const [showLogoutModal, setShowLogoutModal] = React.useState(false);
-    const handleLogout = (e) => {
-        e.preventDefault();
-        setShowLogoutModal(true);
-    };
-    const confirmLogout = () => {
-        logout();
-        navigate('/');
-    };
-    const cancelLogout = () => setShowLogoutModal(false);
+    const {
+        showLogoutModal,
+        handleLogout,
+        confirmLogout,
+        cancelLogout
+    } = useSubmenuLog();
     return (
     <>
     <div className="bloque">

@@ -1,23 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './../style/Client/Contacto.css';
+import { useContacto } from '../../hooks/pages/useContacto';
 
 
 function Contacto() {
-  const [formData, setFormData] = useState({
-    nombre: '',
-    apellidos: '',
-    correo: '',
-    mensaje: ''
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Formulario enviado:', formData);
-  };
+  const { formData, handleChange, handleSubmit } = useContacto();
 
   return (
     <div className="contacto">

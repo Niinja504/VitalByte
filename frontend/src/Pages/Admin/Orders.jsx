@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import foto from '../../assets/Profile.png';
 import '../style/Admin/Orders.css';
 import OrderCard from '../../components/OrderCard';
+import { useOrders } from '../../hooks/pages/useOrders';
 
 const Orders = () => {
   const pedidos = [
@@ -13,27 +14,20 @@ const Orders = () => {
     { id: 6, foto, nombre: 'Producto F', estado: 'Pendiente', fecha: '2025-05-25', total: 59.99 },
   ];
 
-  const [filtroEstado, setFiltroEstado] = useState('');
-  const [filtroOrden, setFiltroOrden] = useState('');
-  const [busqueda, setBusqueda] = useState('');
-
-  let pedidosFiltrados = pedidos.filter(p => {
-    const estadoCoincide = filtroEstado ? p.estado.toLowerCase() === filtroEstado : true;
-    const nombreCoincide = p.nombre.toLowerCase().includes(busqueda.toLowerCase());
-    return estadoCoincide && nombreCoincide;
-  });
-  pedidosFiltrados = pedidosFiltrados.sort((a, b) => {
-    if (filtroOrden === 'fecha') return new Date(b.fecha) - new Date(a.fecha);
-    if (filtroOrden === 'usuario-az') return a.nombre.localeCompare(b.nombre);
-    if (filtroOrden === 'usuario-za') return b.nombre.localeCompare(a.nombre);
-    return 0;
-  });
+  const {
+    filtroEstado,
+    setFiltroEstado,
+    filtroOrden,
+    setFiltroOrden,
+    busqueda,
+    setBusqueda,
+    pedidosFiltrados
+  } = useOrders(pedidos);
 
   return (
     <div className="orders-container">
       <div className="orders-header">
         <h1 className='txt'>Pedidos</h1>
-
         <div className="filters">
           <input
             type="text"
@@ -42,7 +36,6 @@ const Orders = () => {
             onChange={(e) => setBusqueda(e.target.value)}
             className="search-bar"
           />
-
           <select
             className="order-filter-select"
             value={filtroOrden}
@@ -53,7 +46,6 @@ const Orders = () => {
             <option value="usuario-az">Nombre A-Z</option>
             <option value="usuario-za">Nombre Z-A</option>
           </select>
-
           <select
             className="order-filter-select"
             value={filtroEstado}
@@ -66,7 +58,6 @@ const Orders = () => {
           </select>
         </div>
       </div>
-
       <div className="orders-list">
         {pedidosFiltrados.map(p => (
           <OrderCard

@@ -1,22 +1,9 @@
 import React from 'react';
 import '../components/style/OrderCard.css'; 
-
-
+import { useOrderCard } from '../hooks/components/useOrderCard';
 
 const OrderCard = ({ foto, nombre, estado, fecha, total }) => {
- 
-  const getEstadoClass = () => {
-    switch (estado.toLowerCase()) {
-      case 'pendiente':
-        return 'estado-pendiente';
-      case 'activo':
-        return 'estado-activo';
-      case 'finalizado':
-        return 'estado-finalizado';
-      default:
-        return '';
-    }
-  };
+  const { getEstadoClass } = useOrderCard(estado);
 
   return (
     <div className={`order-card ${getEstadoClass()}`}>

@@ -1,0 +1,10 @@
+/* EditUserModal custom styles extracted from inline JSX */
+.edit-user-modal-btn-show {
+  margin-bottom: 10px;
+}
+.edit-user-modal-btn-cancel {
+  margin-left: 10px;
+}
+.edit-user-modal-btns {
+  margin-top: 1rem;
+}

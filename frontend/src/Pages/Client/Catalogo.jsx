@@ -1,66 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import './../style/Client/Catalogo.css';
-import axios from 'axios';
+import React from 'react';
+import '../../Pages/style/Client/Catalogo.css';
 import ProductModal from '../../components/Modales/DetailProducts';
-import { useCart } from '../../context/CartContext'; // Ajusta ruta
+import { useCatalogo } from '../../hooks/pages/useCatalogo';
 
 function Catalogo() {
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [search, setSearch] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const { cart, addToCart, updateQuantity } = useCart();
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/category')
-      .then((res) => {
-        setCategories(res.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/products')
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.error(err));
-  }, []);
-
-  const handleCategoryChange = (e) => {
-    const { value, checked } = e.target;
-    setSelectedCategories((prev) => {
-      if (checked) {
-        return [...prev, value];
-      } else {
-        return prev.filter((cat) => cat !== value);
-      }
-    });
-  };
-
-  const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase());
-
-    if (selectedCategories.length === 0) {
-      return matchesSearch;
-    }
-
-    // El producto puede tener category_id como string o como objeto
-    const productCategoryId = product.category_id?._id || product.category_id || product.category?._id || product.category;
-    const matchesCategory = selectedCategories.includes(productCategoryId);
-
-    return matchesSearch && matchesCategory;
-  });
-
-  const handleCardClick = (product) => {
-    setSelectedProduct(product);
-  };
-
-  const closeModal = () => {
-    setSelectedProduct(null);
-  };
+  const {
+    categories,
+    search,
+    setSearch,
+    selectedCategories,
+    handleCategoryChange,
+    filteredProducts,
+    handleCardClick,
+    selectedProduct,
+    closeModal,
+    cart,
+    addToCart,
+    updateQuantity
+  } = useCatalogo();
 
   return (
     <div className="catalogo-container">
@@ -78,102 +35,49 @@ function Catalogo() {
                   type="checkbox"
                   name="categories"
                   value={value}
-                  onChange={handleCategoryChange}
                   checked={selectedCategories.includes(value)}
+                  onChange={handleCategoryChange}
                 />
               </label>
             );
           })}
         </form>
       </aside>
-
-      <div className="divider"></div>
-
       <main className="main-content">
-        <div className="products-wrapper">
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Buscar productos..."
-              className="search-input"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-
-          <div className="product-grid">
-            {filteredProducts.map((product) => {
-              const inCart = cart.find(p => p._id === product._id);
-
-              return (
-                <div
-                  key={product._id}
-                  className="product-card"
-                  onClick={() => handleCardClick(product)}
-                >
-                  <div className="product-image-container">
-                    {product.image ? (
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="product-image"
-                      />
-                    ) : (
-                      <div className="image-placeholder"></div>
-                    )}
-                  </div>
-
-                  <div className="product-content">
-                    <h3 className="product-name">{product.name}</h3>
-
-                    <div className="product-price-container">
-                      <span className="product-price-label">Precio:</span>
-                      <span className="product-price">${product.price?.toFixed(2)}</span>
-                    </div>
-
-                    <p
-                      className={`product-state ${
-                        product.state === 'Disponible' ? 'disponible' : 'no-disponible'
-                      }`}
-                    >
-                      {product.state}
-                    </p>
-                  </div>
-
-                  {inCart ? (
-                    <div
-                      className="quantity-controls"
-                      onClick={e => e.stopPropagation()}
-                      style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
-                    >
-                      <button
-                        onClick={() => updateQuantity(product._id, -1)}
-                        disabled={inCart.quantity <= 1}
-                      >
-                        -
-                      </button>
-                      <span>{inCart.quantity}</span>
-                      <button onClick={() => updateQuantity(product._id, 1)}>+</button>
-                    </div>
-                  ) : (
-                    <button
-                      className="add-button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addToCart(product);
-                      }}
-                    >
-                      +
-                    </button>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+        <div className="search-bar">
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Buscar productos..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
         </div>
+        <div className="product-grid">
+          {filteredProducts.map(product => (
+            <div key={product._id} className="product-card" onClick={() => handleCardClick(product)}>
+              <div className="product-image-container">
+                <img
+                  src={product.imageUrl || product.image || '/default-product.png'}
+                  alt={product.name}
+                  className="product-image"
+                  onError={e => { e.target.src = '/default-product.png'; }}
+                />
+              </div>
+              <h3 className="product-name">{product.name}</h3>
+              <p>{product.description}</p>
+              <div className="product-price-container">
+                <span className="product-price-label">Precio:</span>
+                <span className="product-price">${product.price}</span>
+              </div>
+              <button className="add-button" onClick={e => { e.stopPropagation(); addToCart(product); }}>+</button>
+            </div>
+          ))}
+        </div>
+        {selectedProduct && (
+          <ProductModal product={selectedProduct} onClose={closeModal} />
+        )}
       </main>
-
-      <ProductModal product={selectedProduct} onClose={closeModal} />
     </div>
   );
 }

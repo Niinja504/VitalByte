@@ -1,31 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Modal from './Modal.jsx';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useLogModal } from '../../hooks/components/useLogModal';
+import '../style/LogModalCustom.css';
 
 const LogModal = ({ isVisible, onClose, onSwitchToRegister }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const { login } = useAuth();
-    const [error, setError] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const userType = await login(email, password);
-        if (!userType) {
-            setError('Credenciales incorrectas');
-        } else {
-            setError('');
-            onClose();
-        }
-    };
-
-    useEffect(() => {
-        if (isVisible && window.location.pathname.startsWith('/Admin')) {
-            window.location.href = '/Admin/Pedidos';
-        }
-    }, [isVisible]);
+    const {
+        email,
+        setEmail,
+        password,
+        setPassword,
+        error,
+        showPassword,
+        setShowPassword,
+        handleSubmit
+    } = useLogModal(onClose);
 
     return (
         <Modal isVisible={isVisible} onClose={onClose}>
@@ -51,9 +40,8 @@ const LogModal = ({ isVisible, onClose, onSwitchToRegister }) => {
                         required
                     />
                     <span
-                        className="eye-icon"
+                        className="log-modal-eye-icon"
                         onClick={() => setShowPassword((v) => !v)}
-                        style={{ cursor: 'pointer', marginLeft: 8 }}
                         tabIndex={-1}
                     >
                         {showPassword ? <FaEyeSlash /> : <FaEye />}

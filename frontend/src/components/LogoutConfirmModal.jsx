@@ -1,7 +1,9 @@
 import React from "react";
-import "./style/Submenu.css";
+import "./style/submenu.css";
+import { useLogoutConfirmModal } from '../hooks/components/useLogoutConfirmModal';
 
 const LogoutConfirmModal = ({ isOpen, onConfirm, onCancel }) => {
+  useLogoutConfirmModal(isOpen, onConfirm, onCancel);
   if (!isOpen) return null;
   return (
     <div className="modal-overlay" onClick={onCancel}>

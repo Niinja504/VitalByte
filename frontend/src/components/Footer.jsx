@@ -1,7 +1,9 @@
 import React from 'react';
 import './style/Footer.css';
+import { useFooter } from '../hooks/components/useFooter';
 
 const Footer = () => {
+  useFooter();
   return (
     <footer className="footer">
       <div className="footer-content">

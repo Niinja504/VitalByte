@@ -1,29 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import './style/Nav.css';
-import './style/Submenu.css';
+import './style/submenu.css';
+import './style/NavAdminCustom.css';
 import logo from '../assets/logovitalBytes.webp';
 import SubmenuLog from './submenulog.jsx';
+import { useNavAdmin } from '../hooks/components/useNavAdmin';
 
 const NavAdmin = () => {
-    const [isSubmenuVisible, setIsSubmenuVisible] = useState(false);
-    const [isAdminView, setIsAdminView] = useState(true);
-    const navigate = useNavigate();
-
-    const ToggleSubmenu = () => {
-        setIsSubmenuVisible(!isSubmenuVisible);
-    };
-
-    const getActiveClass = (path) => {
-        // For exact match or subroutes (e.g., /Admin/Productos/123)
-        return window.location.pathname === path || window.location.pathname.startsWith(path + '/') ? 'active' : '';
-    };
-
-    const handleAdminLinkClick = (event) => {
-        event.preventDefault();
-        const targetPath = event.currentTarget.getAttribute('href');
-        navigate(targetPath);
-    };
+    const {
+        isSubmenuVisible,
+        ToggleSubmenu,
+        getActiveClass,
+        handleAdminLinkClick
+    } = useNavAdmin();
 
     return (
         <div className="div">
@@ -33,9 +22,6 @@ const NavAdmin = () => {
                     <h1 className="titulo">Admin Panel</h1>
                 </div>
                 <ul className="flex space-x-4 admin-nav-list">
-                    <li>
-                        <a href="/Admin/Categorias" className={getActiveClass('/Admin/Categorias') + ' admin-nav-link'} onClick={handleAdminLinkClick}>Categorias</a>
-                    </li>
                     <li>
                         <a href="/Admin/Pedidos" className={getActiveClass('/Admin/Pedidos') + ' admin-nav-link'} onClick={handleAdminLinkClick}>Pedidos</a>
                     </li>
@@ -52,11 +38,11 @@ const NavAdmin = () => {
                         <a href="/Admin/Employees" className={getActiveClass('/Admin/Employees') + ' admin-nav-link'} onClick={handleAdminLinkClick}>Empleados</a>
                     </li>
                 </ul>
-                <div className="MiPerfil" style={{ position: 'relative', display: 'inline-block', marginLeft: 20 }} onClick={ToggleSubmenu}>
-                    <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                <div className="mi-perfil" onClick={ToggleSubmenu}>
+                    <div className="mi-perfil-content">
                         <i className="fa-solid fa-circle-user user-pic"></i>
-                        <span style={{ marginLeft: 8, color: '#914F1E', whiteSpace: 'nowrap' }}>Mi perfil</span>
-                        <i className={`fa-solid fa-chevron-right arrow-right${isSubmenuVisible ? ' active' : ''}`} id="arrow-right" style={{ marginLeft: 8 }}></i>
+                        <span className="mi-perfil-span">Mi perfil</span>
+                        <i className={`fa-solid fa-chevron-right arrow-right${isSubmenuVisible ? ' active' : ''} mi-perfil-arrow`} id="arrow-right"></i>
                     </div>
                     <div className={`submenu${isSubmenuVisible ? ' active' : ''}`} id="submenu">
                         <SubmenuLog />
