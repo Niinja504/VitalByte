@@ -11,7 +11,6 @@ export function CartProvider({ children }) {
 
   const addToCart = (product) => {
     setCart(prev => {
-      console.log('Añadiendo al carrito:', product); // <-- para debug
       const exists = prev.find(p => p._id === product._id);
       if (exists) {
         return prev.map(p =>

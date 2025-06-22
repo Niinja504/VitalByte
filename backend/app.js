@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-// import cartRoutes from "./src/Routes/cart.js";
+import ordersRoutes from "./src/Routes/orders.js";
 import clientRoutes from "./src/Routes/client.js";
 import salesRoutes from "./src/Routes/sales.js";
 
@@ -31,7 +31,7 @@ app.use("/api/products",productsRoutes)
 app.use("/api/employee",employeeRoutes)
 app.use("/api/category",categoryRoutes)
 
-// app.use("/api/cart", cartRoutes);
+app.use("/api/orders", ordersRoutes);
 app.use("/api/client", clientRoutes);
 app.use("/api/sales", salesRoutes);
 app.use("/api/registerClient", registerClientRoutes);
