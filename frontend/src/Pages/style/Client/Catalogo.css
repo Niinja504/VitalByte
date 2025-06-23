@@ -297,6 +297,9 @@
   .search-bar input {
     width: 100%;
   }
+<<<<<<< HEAD
+}
+=======
 
   .products-header {
     padding-top: 4px;
@@ -311,3 +314,4 @@
     padding: 0 4px 8px 4px;
   }
 }
+>>>>>>> b55c5413bdc4528d57e2fd3b6c421e675de19b7f
