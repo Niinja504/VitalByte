@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
 const AuthContext = createContext();
 
@@ -27,6 +28,13 @@ export const AuthProvider = ({ children }) => {
         const normalizedType = data.userType.toLowerCase();
         setUserType(normalizedType);
         setIsAuthenticated(true);
+        Swal.fire({
+          icon: 'success',
+          title: '¡Bienvenido!',
+          text: 'Has iniciado sesión correctamente.',
+          timer: 2000,
+          showConfirmButton: false
+        });
         return normalizedType;
       } else {
         setUserType(null);
@@ -49,6 +57,13 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify(userData)
       });
       if (res.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Registro exitoso!',
+          text: 'Tu cuenta ha sido creada correctamente.',
+          timer: 2000,
+          showConfirmButton: false
+        });
         return true;
       } else {
         return false;
@@ -67,6 +82,16 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     localStorage.removeItem('userType');
     localStorage.removeItem('isAuthenticated');
+    Swal.fire({
+      icon: 'success',
+      title: 'Sesión cerrada',
+      text: 'Has cerrado sesión correctamente.',
+      timer: 2000,
+      showConfirmButton: false
+    });
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 2000);
   };
 
   return (
@@ -78,22 +103,4 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => useContext(AuthContext);
 
-// En el componente de login (donde está el input de password):
-// Reemplaza el input de password por esto:
-// <div className="input-group">
-//   <input
-//     type={showPassword ? "text" : "password"}
-//     name="password"
-//     placeholder="Contraseña"
-//     value={password}
-//     onChange={handleChange}
-//     required
-//   />
-//   <span
-//     className="eye-icon"
-//     onClick={() => setShowPassword((v) => !v)}
-//     style={{ cursor: 'pointer', marginLeft: 8 }}
-//   >
-//     {showPassword ? <FaEyeSlash /> : <FaEye />}
-//   </span>
-// </div>
+

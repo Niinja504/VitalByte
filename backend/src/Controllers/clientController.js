@@ -46,4 +46,17 @@ clientController.getClientById = async (req, res) => {
   }
 };
 
+// GET ME (usuario autenticado)
+clientController.getClientMe = async (req, res) => {
+  try {
+    const client = await clientModel.findById(req.user.id);
+    if (!client) {
+      return res.status(404).json({ message: "Cliente no encontrado" });
+    }
+    res.json(client);
+  } catch (error) {
+    res.status(400).json({ message: "ID inválido o error en la consulta" });
+  }
+};
+
 export default clientController;

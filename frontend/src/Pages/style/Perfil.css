@@ -117,6 +117,14 @@ input.info-value::placeholder {
     background-color: #5f7a4a; /* Color más oscuro al pasar el mouse */
 }
 
+.edit-button:disabled {
+    background-color: #bdbdbd;
+    color: #ffffff;
+    cursor: not-allowed;
+    opacity: 0.7;
+    border: none;
+}
+
 .linea-vertical-abajo {
     width: 2px; /* Ancho de la línea */
     height: 420px; /* Altura de la línea */
