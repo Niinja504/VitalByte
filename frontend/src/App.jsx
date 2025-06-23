@@ -1,7 +1,7 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAuth } from './context/AuthContext.jsx';
-import { CartProvider } from './context/CartContext.jsx'; 
+import { CartProvider } from './context/CartContext.jsx';
 import Nav from './components/Nav.jsx';
 import NavAdmin from './components/NavAdmin.jsx';
 import Home from './Pages/Client/Home.jsx';
@@ -15,7 +15,13 @@ import Orders from './Pages/Admin/Orders.jsx';
 import Sales from './Pages/Admin/Sales.jsx';
 import Products from './Pages/Admin/Products.jsx';
 import Footer from './components/Footer';
+import VerifyCode from './Pages/VerifyCode.jsx';
+import ResetPassword from './Pages/ResetPassword.jsx';
 import './App.css';
+
+import Category from './Pages/Admin/Category.jsx';
+
+import RecoverPassword from './Pages/RecoverPassword.jsx';
 
 function App() {
   const [isAdminView, setIsAdminView] = useState(false);
@@ -47,8 +53,13 @@ function App() {
         {isAdminView ? <NavAdmin /> : <Nav />}
 
         <Routes>
+          <Route path="/new-password" element={<ResetPassword />} />
+          <Route path="/recover-password" element={<RecoverPassword />} />
+          <Route path="/verify-code" element={<VerifyCode />} />
+
           {isAdminView ? (
             <>
+              <Route path="/Admin/Categorias" element={<Category />} />
               <Route path="/Admin/Pedidos" element={<Orders />} />
               <Route path="/Admin/Ventas" element={<Sales />} />
               <Route path="/Admin/Productos" element={<Products />} />

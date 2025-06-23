@@ -8,7 +8,7 @@ export function useCatalogo() {
   const [search, setSearch] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const { cart, addToCart, updateQuantity } = useCart();
+  const { cart, addToCart, updateQuantity, removeFromCart } = useCart();
 
   useEffect(() => {
     axios.get('http://localhost:4000/api/category')
@@ -63,6 +63,7 @@ export function useCatalogo() {
     closeModal,
     cart,
     addToCart,
-    updateQuantity
+    updateQuantity,
+    removeFromCart
   };
 }

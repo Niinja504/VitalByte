@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import perfilImage from '../assets/Perfil.png';
 import './style/Perfil.css';
 import Pedido from '../components/Pedido';
@@ -17,6 +17,47 @@ function Perfil() {
     handleEditProfile
   } = usePerfil();
   const { logout } = useAuth();
+
+  // Estados para errores de validación
+  const [errors, setErrors] = useState({
+    fullname: '',
+    email: '',
+    phone: ''
+  });
+
+  // Validaciones personalizadas
+  const validateField = (name, value) => {
+    let error = '';
+    if (name === 'fullname') {
+      if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]*$/.test(value)) {
+        error = 'Solo letras y espacios';
+      }
+    }
+    if (name === 'email') {
+      if (value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)) {
+        error = 'Correo inválido';
+      }
+    }
+    if (name === 'phone') {
+      if (!/^\d{0,4}-?\d{0,4}$/.test(value)) {
+        error = 'Formato: 0000-0000';
+      }
+      if (value.length > 9) {
+        error = 'Máximo 9 caracteres';
+      }
+    }
+    setErrors(prev => ({ ...prev, [name]: error }));
+  };
+
+  // Handler extendido para validación
+  const handleValidatedInputChange = (e) => {
+    const { name, value } = e.target;
+    validateField(name, value);
+    // Solo permitir el cambio si es válido o vacío
+    if (name === 'fullname' && value && !/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]*$/.test(value)) return;
+    if (name === 'phone' && value && !/^\d{0,4}-?\d{0,4}$/.test(value)) return;
+    handleInputChange(e);
+  };
 
   const handleLogout = () => {
     // Mostrar confirmación antes de cerrar sesión
@@ -68,11 +109,34 @@ function Perfil() {
               <div className="info-content">
                 <div className="info-row">
                   <span className="info-label">Nombre:</span>
-                  <input className="info-value" name="fullname" value={user.fullname} onChange={handleInputChange} placeholder="Nombre" />
+                  <div className="input-error-row">
+                    <input
+                      className="info-value"
+                      name="fullname"
+                      value={user.fullname}
+                      onChange={handleValidatedInputChange}
+                      placeholder="Nombre"
+                      pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]*"
+                      maxLength={40}
+                      autoComplete="off"
+                    />
+                    {errors.fullname && <span className="input-error-msg">{errors.fullname}</span>}
+                  </div>
                 </div>
                 <div className="info-row">
                   <span className="info-label">Correo:</span>
-                  <input className="info-value" name="email" value={user.email} onChange={handleInputChange} placeholder="Correo electrónico" />
+                  <div className="input-error-row">
+                    <input
+                      className="info-value"
+                      name="email"
+                      value={user.email}
+                      onChange={handleValidatedInputChange}
+                      placeholder="Correo electrónico"
+                      type="email"
+                      autoComplete="off"
+                    />
+                    {errors.email && <span className="input-error-msg">{errors.email}</span>}
+                  </div>
                 </div>
                 <div className="info-row">
                   <span className="info-label">Usuario:</span>
@@ -84,13 +148,25 @@ function Perfil() {
                 </div>
                 <div className="info-row">
                   <span className="info-label">Teléfono:</span>
-                  <input className="info-value" name="phone" type="tel" value={user.phone} onChange={handleInputChange} />
+                  <div className="input-error-row">
+                    <input
+                      className="info-value"
+                      name="phone"
+                      type="text"
+                      value={user.phone}
+                      onChange={handleValidatedInputChange}
+                      placeholder="0000-0000"
+                      maxLength={9}
+                      autoComplete="off"
+                    />
+                    {errors.phone && <span className="input-error-msg">{errors.phone}</span>}
+                  </div>
                 </div>
-                <div className="info-row" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+                <div className="info-row button-actions">
                   <button
                     className="edit-button"
                     onClick={handleEditProfile}
-                    disabled={!isUserChanged}
+                    disabled={!isUserChanged || errors.fullname || errors.email || errors.phone}
                   >
                     Editar perfil
                   </button>

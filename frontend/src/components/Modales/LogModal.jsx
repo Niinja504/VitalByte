@@ -1,6 +1,7 @@
 import React from 'react';
-import Modal from './Modal.jsx';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import Modal from './Modal.jsx';
 import { useLogModal } from '../../hooks/components/useLogModal';
 import '../style/LogModalCustom.css';
 
@@ -15,6 +16,8 @@ const LogModal = ({ isVisible, onClose, onSwitchToRegister }) => {
         setShowPassword,
         handleSubmit
     } = useLogModal(onClose);
+
+    const navigate = useNavigate(); 
 
     return (
         <Modal isVisible={isVisible} onClose={onClose}>
@@ -50,12 +53,28 @@ const LogModal = ({ isVisible, onClose, onSwitchToRegister }) => {
                 {error && <div className="modal-error">{error}</div>}
                 <button type="submit" className="modal-btn">Entrar</button>
             </form>
+
             <p className="modal-switch-text">
                 ¿No tienes cuenta?{' '}
                 <span className="modal-switch-link" onClick={onSwitchToRegister}>
                     Regístrate aquí
                 </span>
             </p>
+
+           <p className="modal-switch-text">
+  ¿Olvidaste tu contraseña?{' '}
+  <span
+    className="modal-switch-link"
+    style={{ cursor: "pointer", color: "#007bff" }}
+    onClick={() => {
+      onClose();
+      navigate("/recover-password");
+    }}
+  >
+    Recupérala aquí
+  </span>
+</p>
+
         </Modal>
     );
 };

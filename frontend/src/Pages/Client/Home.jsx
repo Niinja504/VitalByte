@@ -9,9 +9,7 @@ function Home() {
   return (
     <div className="home">
       <img src={Baner} alt="Banner" className="home-banner" />
-      <div className="home-btn-container">
-        <button onClick={abrirModal}>Iniciar Sesión</button>
-      </div>
+      
       {mostrarModal && (
         <div className="modal-overlay">
           <div className="modal-content">

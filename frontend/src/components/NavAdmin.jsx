@@ -23,6 +23,9 @@ const NavAdmin = () => {
                 </div>
                 <ul className="flex space-x-4 admin-nav-list">
                     <li>
+                        <a href="/Admin/Categorias" className={getActiveClass('/Admin/Categorias') + ' admin-nav-link'} onClick={handleAdminLinkClick}>Categorias</a>
+                    </li>
+                    <li>
                         <a href="/Admin/Pedidos" className={getActiveClass('/Admin/Pedidos') + ' admin-nav-link'} onClick={handleAdminLinkClick}>Pedidos</a>
                     </li>
                     <li>

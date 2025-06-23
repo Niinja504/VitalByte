@@ -7,12 +7,21 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [userType, setUserType] = useState(() => localStorage.getItem('userType'));
   const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('isAuthenticated') === 'true');
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem('user');
+    return stored ? JSON.parse(stored) : null;
+  });
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('userType', userType || '');
     localStorage.setItem('isAuthenticated', isAuthenticated);
-  }, [userType, isAuthenticated]);
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [userType, isAuthenticated, user]);
 
   const login = async (email, password) => {
     try {
@@ -23,27 +32,22 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ email, password })
       });
       const data = await res.json();
-      if (res.ok && data.userType) {
-        // Normalize admin userType to lowercase for consistency
+
+      if (res.ok && data.userType && data.user) {
         const normalizedType = data.userType.toLowerCase();
         setUserType(normalizedType);
         setIsAuthenticated(true);
-        Swal.fire({
-          icon: 'success',
-          title: '¡Bienvenido!',
-          text: 'Has iniciado sesión correctamente.',
-          timer: 2000,
-          showConfirmButton: false
-        });
         return normalizedType;
       } else {
         setUserType(null);
         setIsAuthenticated(false);
+        setUser(null);
         return null;
       }
     } catch (err) {
       setUserType(null);
       setIsAuthenticated(false);
+      setUser(null);
       return null;
     }
   };
@@ -57,13 +61,6 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify(userData)
       });
       if (res.ok) {
-        Swal.fire({
-          icon: 'success',
-          title: '¡Registro exitoso!',
-          text: 'Tu cuenta ha sido creada correctamente.',
-          timer: 2000,
-          showConfirmButton: false
-        });
         return true;
       } else {
         return false;
@@ -80,27 +77,25 @@ export const AuthProvider = ({ children }) => {
     });
     setUserType(null);
     setIsAuthenticated(false);
+    setUser(null);
     localStorage.removeItem('userType');
     localStorage.removeItem('isAuthenticated');
-    Swal.fire({
-      icon: 'success',
-      title: 'Sesión cerrada',
-      text: 'Has cerrado sesión correctamente.',
-      timer: 2000,
-      showConfirmButton: false
-    });
-    setTimeout(() => {
-      window.location.href = '/';
-    }, 2000);
   };
 
   return (
-    <AuthContext.Provider value={{ userType, isAuthenticated, login, register, logout }}>
+    <AuthContext.Provider value={{
+      user,
+      userType,
+      isAuthenticated,
+      login,
+      register,
+      logout,
+      showPassword,
+      setShowPassword
+    }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => useContext(AuthContext);
-
-

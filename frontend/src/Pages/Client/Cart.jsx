@@ -19,8 +19,14 @@ function Cart() {
     handlePurchase
   } = useCartPage();
 
+  function formatPhoneNumber(value) {
+    const digits = value.replace(/\D/g, '');
+    if (digits.length <= 4) return digits;
+    return `${digits.slice(0, 4)}-${digits.slice(4, 8)}`;
+  }
+
   return (
-    <div className="cart-container">
+    <div className="cart-container page-cart">
       <div className="cart-products">
         <h1>Carrito de Compras</h1>
         <table className="cart-table">
@@ -36,23 +42,21 @@ function Cart() {
           <tbody>
             {cart.length === 0 ? (
               <tr>
-                <td colSpan="5" style={{ textAlign: 'center' }}>
-                  Tu carrito está vacío.
-                </td>
+                <td colSpan="5" className="empty-cart">Tu carrito está vacío.</td>
               </tr>
             ) : (
               cart.map(p => (
                 <tr key={p._id}>
                   <td>{p.name}</td>
                   <td>
-                    <button onClick={() => updateQuantity(p._id, -1)} disabled={p.quantity <= 1}>-</button>
-                    {p.quantity}
-                    <button onClick={() => updateQuantity(p._id, 1)}>+</button>
+                    <button className="qty-btn" onClick={() => updateQuantity(p._id, -1)} disabled={p.quantity <= 1}>-</button>
+                    <span className="qty-value">{p.quantity}</span>
+                    <button className="qty-btn" onClick={() => updateQuantity(p._id, 1)}>+</button>
                   </td>
-                  <td>${p.price}</td>
+                  <td>${p.price.toFixed(2)}</td>
                   <td>${(p.price * p.quantity).toFixed(2)}</td>
                   <td>
-                    <button onClick={() => removeFromCart(p._id)}>Eliminar</button>
+                    <button className="delete-btn" onClick={() => removeFromCart(p._id)}>✕</button>
                   </td>
                 </tr>
               ))
@@ -63,32 +67,38 @@ function Cart() {
           <strong>Total: ${total.toFixed(2)}</strong>
         </div>
       </div>
+
       <div className="cart-form">
-        <h2>Datos de Entrega</h2>
-        <input
-          type="text"
-          placeholder="Dirección de entrega"
-          value={address}
-          onChange={e => setAddress(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Punto de referencia (opcional)"
-          value={referencePoint}
-          onChange={e => setReferencePoint(e.target.value)}
-        />
-        <input
-          type="tel"
-          placeholder="Teléfono de contacto"
-          value={phone}
-          onChange={e => setPhone(e.target.value)}
-        />
+        <h2>Pedido</h2>
+
+        <label>Método de pago:</label>
         <select value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)}>
           <option value="Efectivo">Efectivo</option>
           <option value="Tarjeta">Tarjeta</option>
         </select>
-        <button className="cart-purchase-btn" onClick={handlePurchase} disabled={cart.length === 0}>
-          Realizar Pedido
+
+        <label>Dirección de envío:</label>
+        <input
+          type="text"
+          placeholder="Dirección"
+          value={address}
+          onChange={e => setAddress(e.target.value)}
+        />
+
+        <label>Teléfono de contacto:</label>
+        <input
+          type="tel"
+          placeholder="0000–0000"
+          value={phone}
+          onChange={e => setPhone(formatPhoneNumber(e.target.value))}
+        />
+
+        <button
+          className="cart-purchase-btn"
+          onClick={handlePurchase}
+          disabled={cart.length === 0}
+        >
+          Comprar
         </button>
       </div>
     </div>
