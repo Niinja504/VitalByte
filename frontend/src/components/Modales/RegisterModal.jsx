@@ -3,10 +3,12 @@ import Modal from './Modal.jsx';
 import { FaUser, FaUserCircle, FaEnvelope, FaLock, FaBirthdayCake, FaPhone, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useRegisterModal } from '../../hooks/components/useRegisterModal';
 import VerifyEmailModal from './VerifyEmailModal.jsx';
+import { useSuccessModal } from '../SuccessModal';
 import './Styles/Modal.css';
 import '../style/RegisterModalCustom.css';
 
 const RegisterModal = ({ isVisible, onClose, onSwitchToLogin }) => {
+    const { showSuccess } = useSuccessModal();
     const {
         form,
         error,
@@ -20,8 +22,16 @@ const RegisterModal = ({ isVisible, onClose, onSwitchToLogin }) => {
         showConfirmPassword,
         setShowConfirmPassword,
         handleChange,
-        handleSubmit
+        handleSubmit: baseHandleSubmit
     } = useRegisterModal();
+
+    // Envolver handleSubmit para mostrar modal de éxito
+    const handleSubmit = async (e) => {
+        await baseHandleSubmit(e);
+        if (success) {
+            showSuccess('¡Registro exitoso!');
+        }
+    };
 
     return (
         <>

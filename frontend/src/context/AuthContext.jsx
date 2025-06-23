@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }) => {
         const normalizedType = data.userType.toLowerCase();
         setUserType(normalizedType);
         setIsAuthenticated(true);
+        setUser(data.user); // <-- ¡Esto faltaba!
         return normalizedType;
       } else {
         setUserType(null);

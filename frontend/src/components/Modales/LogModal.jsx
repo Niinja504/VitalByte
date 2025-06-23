@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import Modal from './Modal.jsx';
 import { useLogModal } from '../../hooks/components/useLogModal';
 import RecoverPasswordModal from '../../components/Modales/RecoverPasswordModal.jsx';
+import { useSuccessModal } from '../SuccessModal';
 import '../style/LogModalCustom.css';
 
 const LogModal = ({ isVisible, onClose, onSwitchToRegister }) => {
   const [showRecover, setShowRecover] = useState(false);
+  const { showSuccess } = useSuccessModal();
 
   const {
     email,
@@ -17,8 +19,17 @@ const LogModal = ({ isVisible, onClose, onSwitchToRegister }) => {
     error,
     showPassword,
     setShowPassword,
-    handleSubmit
+    handleSubmit: baseHandleSubmit
   } = useLogModal(onClose);
+
+  // Envolver handleSubmit para mostrar modal de éxito
+  const handleSubmit = async (e) => {
+    const prevError = error;
+    await baseHandleSubmit(e);
+    if (!prevError && !error) {
+      showSuccess('¡Inicio de sesión exitoso!');
+    }
+  };
 
   const navigate = useNavigate(); 
 
