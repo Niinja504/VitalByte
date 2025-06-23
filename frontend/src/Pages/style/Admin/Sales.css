@@ -1,0 +1,68 @@
+.sales-container {
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.txt {
+  color: white;
+}
+
+.txth1 {
+  color: white;
+  font-size: 51px;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  max-width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.tabla th,
+.tabla td {
+  padding: 8px 10px;
+  text-align: left;
+  border: 1px solid #ccc;
+  word-wrap: break-word;
+  white-space: nowrap;
+}
+
+.tabla thead {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.tabla tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.btn-editar,
+.btn-eliminar {
+  padding: 6px 12px;
+  margin: 0 4px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-editar {
+  background-color: #396341;
+}
+
+.btn-eliminar {
+  background-color: #753e3e;
+}
+
+.btn-editar:active,
+.btn-eliminar:active {
+  background-color: #800080 !important;
+}

@@ -3,9 +3,11 @@ import useRecoverPassword from "../../hooks/usePasswordRecovery";
 import "../../components/Modales/Styles/RecoverPassword.css"
 import Swal from "sweetalert2";
 import Modal from "./Modal";
+import { useSuccessModal } from '../SuccessModal';
 
 const RecoverPasswordModal = ({ isVisible, onClose }) => {
   const { enviarCorreo, verificarCodigo, resetPassword, loading } = useRecoverPassword();
+  const { showSuccess } = useSuccessModal();
 
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
@@ -33,9 +35,8 @@ const RecoverPasswordModal = ({ isVisible, onClose }) => {
     }
     const ok = await resetPassword(password);
     if (ok) {
-      Swal.fire("Éxito", "Contraseña actualizada correctamente", "success").then(() => {
-        onClose();
-      });
+      showSuccess('¡Contraseña actualizada correctamente!');
+      onClose();
     }
   };
 

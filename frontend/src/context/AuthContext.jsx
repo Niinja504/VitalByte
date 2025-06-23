@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
 const AuthContext = createContext();
 
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
         const normalizedType = data.userType.toLowerCase();
         setUserType(normalizedType);
         setIsAuthenticated(true);
-        setUser(data.user);
+        setUser(data.user); // <-- ¡Esto faltaba!
         return normalizedType;
       } else {
         setUserType(null);
@@ -60,7 +61,11 @@ export const AuthProvider = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData)
       });
-      return res.ok;
+      if (res.ok) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (err) {
       return false;
     }
@@ -76,7 +81,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem('userType');
     localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('user');
   };
 
   return (

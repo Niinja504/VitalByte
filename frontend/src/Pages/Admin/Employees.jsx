@@ -3,6 +3,7 @@ import RegisterEmployeeModal from '../../components/Modales/RegisterEmployeeModa
 import '../style/Admin/Employees.css';
 import Title from '../../components/Title.jsx';
 import { useEmployees } from '../../hooks/pages/useEmployees';
+import { useSuccessModal } from '../../components/SuccessModal';
 
 const Employees = () => {
   const {
@@ -15,6 +16,13 @@ const Employees = () => {
     handleCloseModal,
     handleSuccess
   } = useEmployees();
+
+  const { showSuccess } = useSuccessModal();
+
+  const handleEliminarEmpleado = (id) => {
+    eliminarEmpleado(id);
+    showSuccess('¡Empleado eliminado!');
+  };
 
   return (
     <div className="employees-container">
@@ -75,7 +83,7 @@ const Employees = () => {
                   >Editar</button>
                   <button
                     className="btn-eliminar"
-                    onClick={() => eliminarEmpleado(emp._id)}
+                    onClick={() => handleEliminarEmpleado(emp._id)}
                   >Eliminar</button>
                 </td>
               </tr>

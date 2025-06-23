@@ -3,6 +3,7 @@ import "../style/Admin/Product.css";
 import ModalEditarProducto from "../../components/Modales/Products_Admin";
 import Title from "../../components/Title";
 import { useProducts } from '../../hooks/pages/useProducts';
+import { useSuccessModal } from '../../components/SuccessModal';
 
 const Products = () => {
   const {
@@ -23,6 +24,18 @@ const Products = () => {
     guardarProducto,
     productosFiltrados
   } = useProducts();
+
+  const { showSuccess } = useSuccessModal();
+
+  const handleGuardarProducto = (...args) => {
+    guardarProducto(...args);
+    showSuccess(isEditMode ? '¡Producto actualizado!' : '¡Producto agregado!');
+  };
+
+  const handleEliminarProducto = (id) => {
+    eliminarProducto(id);
+    showSuccess('¡Producto eliminado!');
+  };
 
   return (
     <div className="products-container">
@@ -45,10 +58,10 @@ const Products = () => {
         handleChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })}
         handleImageUpload={e => setPreviewImage(URL.createObjectURL(e.target.files[0]))}
         previewImage={previewImage}
-        guardarProducto={guardarProducto}
+        guardarProducto={handleGuardarProducto}
         categories={categories}
         isEditMode={isEditMode}
-        onSave={guardarProducto}
+        onSave={handleGuardarProducto}
       />
       <input
         type="text"
@@ -85,7 +98,7 @@ const Products = () => {
                 </td>
                 <td>
                   <button className="btn-editar" onClick={() => abrirModalEditar(prod)}>Editar</button>
-                  <button className="btn-eliminar" onClick={() => eliminarProducto(prod._id)}>Eliminar</button>
+                  <button className="btn-eliminar" onClick={() => handleEliminarProducto(prod._id)}>Eliminar</button>
                 </td>
               </tr>
             ))}

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useState, useEffect } from 'react';
 import { useAuth } from './context/AuthContext.jsx';
 import { CartProvider } from './context/CartContext.jsx';
+import { SuccessModalProvider } from './components/SuccessModal.jsx';
 import Nav from './components/Nav.jsx';
 import NavAdmin from './components/NavAdmin.jsx';
 import Home from './Pages/Client/Home.jsx';
@@ -16,6 +17,7 @@ import Sales from './Pages/Admin/Sales.jsx';
 import Products from './Pages/Admin/Products.jsx';
 import Footer from './components/Footer';
 import './App.css';
+import './components/style/SuccessModal.css';
 import Category from './Pages/Admin/Category.jsx';
 
 function App() {
@@ -43,37 +45,39 @@ function App() {
   }, [isAuthenticated, userType]);
 
   return (
-    <CartProvider>
-      <Router>
-        {isAdminView ? <NavAdmin /> : <Nav />}
+    <SuccessModalProvider>
+      <CartProvider>
+        <Router>
+          {isAdminView ? <NavAdmin /> : <Nav />}
 
-        <Routes>
+          <Routes>
 
-          {isAdminView ? (
-            <>
-              <Route path="/Admin/Categorias" element={<Category />} />
-              <Route path="/Admin/Pedidos" element={<Orders />} />
-              <Route path="/Admin/Ventas" element={<Sales />} />
-              <Route path="/Admin/Productos" element={<Products />} />
-              <Route path="/Admin/Clientes" element={<Users />} />
-              <Route path="/Admin/Employees" element={<Employees />} />
-              <Route path="/Admin/*" element={<Navigate to="/Admin/Pedidos" replace />} />
-            </>
-          ) : (
-            <>
-              <Route path="/" element={<Navigate to="/Home" />} />
-              <Route path="/Home" element={<Home />} />
-              <Route path="/Catalogo" element={<Catalogo />} />
-              <Route path="/Contacto" element={<Contacto />} />
-              <Route path="/Perfil" element={<Perfil />} />
-              <Route path="/Cart" element={<Cart />} />
-            </>
-          )}
-        </Routes>
+            {isAdminView ? (
+              <>
+                <Route path="/Admin/Categorias" element={<Category />} />
+                <Route path="/Admin/Pedidos" element={<Orders />} />
+                <Route path="/Admin/Ventas" element={<Sales />} />
+                <Route path="/Admin/Productos" element={<Products />} />
+                <Route path="/Admin/Clientes" element={<Users />} />
+                <Route path="/Admin/Employees" element={<Employees />} />
+                <Route path="/Admin/*" element={<Navigate to="/Admin/Pedidos" replace />} />
+              </>
+            ) : (
+              <>
+                <Route path="/" element={<Navigate to="/Home" />} />
+                <Route path="/Home" element={<Home />} />
+                <Route path="/Catalogo" element={<Catalogo />} />
+                <Route path="/Contacto" element={<Contacto />} />
+                <Route path="/Perfil" element={<Perfil />} />
+                <Route path="/Cart" element={<Cart />} />
+              </>
+            )}
+          </Routes>
 
-        <Footer />
-      </Router>
-    </CartProvider>
+          <Footer />
+        </Router>
+      </CartProvider>
+    </SuccessModalProvider>
   );
 }
 

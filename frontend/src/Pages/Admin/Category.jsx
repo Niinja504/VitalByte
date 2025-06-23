@@ -3,6 +3,7 @@ import { Search, CirclePlus } from 'lucide-react';
 import CategoryCard from '../../hooks/components/CategoryCard.jsx';
 import useDataCategory from '../../hooks/useDataCategory.jsx';
 import RegisterCategoryModal from '../../components/Modales/RegisterCategoryModal.jsx';
+import { useSuccessModal } from '../../components/SuccessModal';
 import '../style/Admin/Category.css';
 
 const Category = () => {
@@ -19,6 +20,7 @@ const Category = () => {
     deleteCategory
   } = useDataCategory();
 
+  const { showSuccess } = useSuccessModal();
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = (cat = null) => {
@@ -40,7 +42,13 @@ const Category = () => {
 
   const handleSubmit = () => {
     categoryEdit ? updateCategory() : createCategory();
+    showSuccess(categoryEdit ? '¡Categoría actualizada!' : '¡Categoría agregada!');
     handleCloseModal();
+  };
+
+  const handleDelete = (id) => {
+    deleteCategory(id);
+    showSuccess('¡Categoría eliminada!');
   };
 
   const filtered = categories.filter(cat =>
@@ -75,7 +83,7 @@ const Category = () => {
             key={cat._id}
             name={cat.name}
             onEdit={() => handleOpenModal(cat)}
-            onDelete={() => deleteCategory(cat._id)}
+            onDelete={() => handleDelete(cat._id)}
           />
         ))}
       </div>

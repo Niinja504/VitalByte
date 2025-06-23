@@ -2,7 +2,7 @@ import React from 'react';
 import Swal from 'sweetalert2';
 import Title from '../../components/Title.jsx';
 import { useSales } from '../../hooks/pages/useSales';
-import '../style/Admin/Employees.css'; // Usa los mismos estilos para coherencia visual
+import '../style/Admin/Sales.css';
 
 const Sales = () => {
     const { sales, loading, deleteSale, updateSale } = useSales();
@@ -28,13 +28,13 @@ const Sales = () => {
             title: "Actualizar estado",
             input: "text",
             inputLabel: "Nuevo estado",
-            inputValue: sale.status,
+            inputValue: sale.state,
             showCancelButton: true,
             confirmButtonText: "Actualizar",
             cancelButtonText: "Cancelar",
         }).then((result) => {
             if (result.isConfirmed && result.value) {
-                updateSale(sale._id, { ...sale, status: result.value });
+                updateSale(sale._id, { ...sale, state: result.value });
                 Swal.fire("Actualizado", "La venta ha sido actualizada.", "success");
             }
         });
@@ -55,8 +55,8 @@ const Sales = () => {
                     <table className="tabla">
                         <thead>
                             <tr>
-                                <th>ID Cliente</th>
-                                <th>ID Producto</th>
+                                <th>Cliente</th>
+                                <th>Cantidad Productos</th>
                                 <th>Total</th>
                                 <th>Método de pago</th>
                                 <th>Dirección</th>
@@ -67,12 +67,12 @@ const Sales = () => {
                         <tbody>
                             {sales && sales.length > 0 ? sales.map((sale) => (
                                 <tr key={sale._id}>
-                                    <td>{sale.idclient || sale.iduser}</td>
-                                    <td>{sale.idProduct}</td>
-                                    <td>${sale.total}</td>
-                                    <td>{sale.paymentMethod}</td>
-                                    <td>{sale.direction}</td>
-                                    <td>{sale.status}</td>
+                                    <td>{sale.client_id?.fullname || "Sin nombre"}</td>
+                                    <td>{sale.items?.length || 0}</td>
+                                    <td>${sale.total_price}</td>
+                                    <td>{sale.payment_method}</td>
+                                    <td>{sale.delivery_address}</td>
+                                    <td>{sale.state}</td>
                                     <td>
                                         <button
                                             className="btn-editar"
