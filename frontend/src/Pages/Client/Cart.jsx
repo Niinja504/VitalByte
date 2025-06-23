@@ -19,7 +19,6 @@ function Cart() {
     handlePurchase
   } = useCartPage();
 
-  // Función para formatear teléfono: 12345678 → 1234-5678
   function formatPhoneNumber(value) {
     const digits = value.replace(/\D/g, '');
     if (digits.length <= 4) return digits;

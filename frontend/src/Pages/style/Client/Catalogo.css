@@ -50,12 +50,14 @@
 
 .main-content {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* ✅ Esto los apila de arriba a abajo */
   width: 100%;
   height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
 }
+
+
 
 .search-bar {
   display: flex;
