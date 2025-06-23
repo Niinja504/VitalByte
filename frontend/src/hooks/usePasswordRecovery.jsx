@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 const useRecoverPassword = () => {
   const [loading, setLoading] = useState(false);
 
-// useRecoverPassword.js
 
 const enviarCorreo = async (email) => {
   setLoading(true);
@@ -16,7 +15,6 @@ const enviarCorreo = async (email) => {
       { withCredentials: true }
     );
 
-    // Aceptar si hay status 200 y el mensaje contiene "code"
     if (res.status === 200 && res.data.message?.toLowerCase().includes("code")) {
       return true;
     } else {
@@ -46,7 +44,6 @@ const verificarCodigo = async (code) => {
     const msg = res.data.message?.toLowerCase();
 
     if (msg && msg.includes("verified")) {
-      // Es un mensaje exitoso, aunque el backend lo haya devuelto mal etiquetado
       Swal.fire("Éxito", "Código verificado correctamente.", "success");
       return true;
     } else {

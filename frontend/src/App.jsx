@@ -15,13 +15,8 @@ import Orders from './Pages/Admin/Orders.jsx';
 import Sales from './Pages/Admin/Sales.jsx';
 import Products from './Pages/Admin/Products.jsx';
 import Footer from './components/Footer';
-import VerifyCode from './Pages/VerifyCode.jsx';
-import ResetPassword from './Pages/ResetPassword.jsx';
 import './App.css';
-
 import Category from './Pages/Admin/Category.jsx';
-
-import RecoverPassword from './Pages/RecoverPassword.jsx';
 
 function App() {
   const [isAdminView, setIsAdminView] = useState(false);
@@ -53,9 +48,6 @@ function App() {
         {isAdminView ? <NavAdmin /> : <Nav />}
 
         <Routes>
-          <Route path="/new-password" element={<ResetPassword />} />
-          <Route path="/recover-password" element={<RecoverPassword />} />
-          <Route path="/verify-code" element={<VerifyCode />} />
 
           {isAdminView ? (
             <>

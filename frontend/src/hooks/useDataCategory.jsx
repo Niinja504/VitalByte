@@ -10,7 +10,6 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// Validación de nombre
 const validateCategoryName = (name) => {
   const trimmed = name.trim();
   const onlyLettersRegex = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]{2,}$/;
