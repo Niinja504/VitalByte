@@ -1,21 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext';
-import Swal from 'sweetalert2';
+// import { useAuth } from '../context/AuthContext';
 
 export function usePerfil() {
   const [activeView, setActiveView] = useState('perfil');
   const [orders, setOrders] = useState([]);
-  const [user, setUser] = useState({
-    fullname: '',
-    email: '',
-    username: '',
-    birth: '',
-    phone: ''
-  });
-  const [originalUser, setOriginalUser] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const { isAuthenticated } = useAuth();
+  // const { user } = useAuth();
 
   useEffect(() => {
     // Obtener datos del usuario autenticado
