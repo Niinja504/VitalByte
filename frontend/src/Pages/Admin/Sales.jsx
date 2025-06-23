@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSales } from '../../hooks/pages/useSales';
+import '../style/Admin/ProductTable.css';
 
 const Sales = () => {
     useSales();

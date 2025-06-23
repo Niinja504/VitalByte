@@ -1,6 +1,7 @@
 import React from 'react';
 import foto from '../../assets/Profile.png';
 import '../style/Admin/Orders.css';
+import '../style/Admin/ProductTable.css';
 import OrderCard from '../../components/OrderCard';
 import { useOrders } from '../../hooks/pages/useOrders';
 

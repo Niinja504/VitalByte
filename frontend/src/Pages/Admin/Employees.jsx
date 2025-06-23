@@ -1,6 +1,7 @@
 import React from 'react';
 import RegisterEmployeeModal from '../../components/Modales/RegisterEmployeeModal.jsx';
 import '../style/Admin/Employees.css';
+import '../style/Admin/ProductTable.css';
 import Title from '../../components/Title.jsx';
 import { useEmployees } from '../../hooks/pages/useEmployees';
 import { useSuccessModal } from '../../components/SuccessModal';

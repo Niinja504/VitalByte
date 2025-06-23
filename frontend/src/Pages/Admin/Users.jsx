@@ -1,5 +1,6 @@
 import React from 'react';
 import '../style/Admin/users.css';
+import '../style/Admin/ProductTable.css';
 import EditUserModal from '../../components/Modales/EditUserModal';
 import { useUsers } from '../../hooks/pages/useUsers';
 import { useSuccessModal } from '../../components/SuccessModal';

@@ -5,6 +5,7 @@ import useDataCategory from '../../hooks/useDataCategory.jsx';
 import RegisterCategoryModal from '../../components/Modales/RegisterCategoryModal.jsx';
 import { useSuccessModal } from '../../components/SuccessModal';
 import '../style/Admin/Category.css';
+import '../style/Admin/ProductTable.css';
 
 const Category = () => {
   const {

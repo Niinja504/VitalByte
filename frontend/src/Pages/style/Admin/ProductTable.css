@@ -1,0 +1,83 @@
+/* Moderniza la tabla de productos admin para mejor visualización */
+.tabla-contenedor {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 2rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 1rem 0.5rem;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  background: #fff;
+}
+
+.tabla th, .tabla td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tabla th {
+  background: #c5f7ad;
+  color: #222;
+  font-weight: 600;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.tabla tr:last-child td {
+  border-bottom: none;
+}
+
+.product-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  background: #f8f8f8;
+}
+
+.btn-editar, .btn-eliminar {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.95rem;
+  margin-right: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-editar {
+  background: #8d4b2e;
+  color: #fff;
+}
+
+.btn-editar:hover {
+  background: #a65c3a;
+}
+
+.btn-eliminar {
+  background: #b3261e;
+  color: #fff;
+}
+
+.btn-eliminar:hover {
+  background: #d32f2f;
+}
+
+@media (max-width: 900px) {
+  .tabla th, .tabla td {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.95rem;
+  }
+  .product-img {
+    width: 40px;
+    height: 40px;
+  }
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import "../style/Admin/Product.css";
+import "../style/Admin/ProductTable.css";
 import ModalEditarProducto from "../../components/Modales/Products_Admin";
 import Title from "../../components/Title";
 import { useProducts } from '../../hooks/pages/useProducts';
